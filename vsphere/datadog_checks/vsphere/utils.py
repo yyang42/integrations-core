@@ -9,23 +9,7 @@ from types import FunctionType, ModuleType
 from pyVmomi import vim
 
 from datadog_checks.base import ensure_unicode
-
-SHORT_ROLLUP = {
-    "average": "avg",
-    "summation": "sum",
-    "maximum": "max",
-    "minimum": "min",
-    "latest": "latest",
-    "none": "raw",
-}
-
-MOR_TYPE_AS_STRING = {
-    vim.HostSystem: 'host',
-    vim.VirtualMachine: 'vm',
-    vim.Datacenter: 'datacenter',
-    vim.Datastore: 'datastore',
-    vim.ClusterComputeResource: 'cluster',
-}
+from datadog_checks.vsphere.constants import SHORT_ROLLUP, MOR_TYPE_AS_STRING
 
 
 def format_metric_name(counter):
@@ -47,14 +31,14 @@ def match_any_regex(string, regexes):
 def is_resource_excluded_by_filters(mor, infrastructure_data, resource_filters):
     resource_type = MOR_TYPE_AS_STRING[type(mor)]
 
+    if not [f for f in resource_filters if f[0] == resource_type]:
+        # No filter for this resource, collect everything
+        return False
+
     name_filter = resource_filters.get((resource_type, 'name'))
     inventory_path_filter = resource_filters.get((resource_type, 'inventory_path'))
     hostname_filter = resource_filters.get((resource_type, 'hostname'))
     guest_hostname_filter = resource_filters.get((resource_type, 'guest_hostname'))
-
-    if not any([name_filter, inventory_path_filter, hostname_filter, guest_hostname_filter]):
-        # No filter for this resource, collect everything
-        return False
 
     if name_filter:
         mor_name = infrastructure_data.get(mor).get("name", "")
@@ -140,7 +124,7 @@ def should_collect_per_instance_values(metric_name, resource_type):
     # TODO: Collective per-instance metrics is really expensive for big environments and has usually little value.
     # TODO: Also that adds an extra layer of complexity where they have to set `instance:none` to see the correct value.
     if resource_type == vim.Datastore:
-        return True
+        return False
     return False
 
 

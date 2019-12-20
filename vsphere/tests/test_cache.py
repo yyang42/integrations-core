@@ -2,8 +2,11 @@ from datetime import datetime, timedelta
 
 import pytest
 from mock import MagicMock, patch
+from pyVmomi import vim
+from six import iteritems
 
-from datadog_checks.vsphere.cache import VSphereCache
+from datadog_checks.vsphere.cache import VSphereCache, MetricsMetadataCache, InfrastructureCache
+from datadog_checks.vsphere.constants import ALL_RESOURCES, ALL_RESOURCES_WITH_METRICS
 
 
 def test_generic_cache_usage():
@@ -53,10 +56,29 @@ def test_refresh():
 
 
 def test_metrics_metadata_cache():
-    # TODO
-    pass
+    cache = MetricsMetadataCache(float('inf'))
+    data = {k: object() for k in ALL_RESOURCES_WITH_METRICS}
+
+    with cache.update():
+        for k, v in iteritems(data):
+            cache.set_metadata(k, v)
+
+    for k, v in iteritems(data):
+        assert cache.get_metadata(k) == v
 
 
-def test_infrastructure_cache():
-    # TODO
-    pass
+@patch('datadog_checks.vsphere.cache.type')
+def test_infrastructure_cache(mocked_type):
+    mocked_type.side_effect = lambda x: x.mocked_spec if hasattr(x, 'mocked_spec') else type(x)
+    cache = InfrastructureCache(float('inf'))
+    mors = {MagicMock(mocked_spec=k): object() for k in ALL_RESOURCES_WITH_METRICS * 2}
+    with cache.update():
+        for k, v in iteritems(mors):
+            cache.set_mor_data(k, v)
+
+    for r in ALL_RESOURCES_WITH_METRICS:
+        assert len(cache.get_mors(r)) == 2
+
+    for k, v in iteritems(mors):
+        assert cache.get_mor_props(k) == v
+

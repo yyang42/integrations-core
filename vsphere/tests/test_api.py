@@ -78,22 +78,6 @@ def test_smart_retry(realtime_instance):
         assert smart_connect.call_count == 2
 
 
-"""def test_metric_collection(realtime_instance):
-    num_queries = 100
-    num_threads = 10
-    with patch('datadog_checks.vsphere.api.connect') as connect, patch('datadog_checks.vsphere.api.threading') as threading:
-        threading.get_ident.side_effect = [i % num_threads for i in range(num_queries)]
-        metric_collector = MetricCollector(realtime_instance)
-        assert not metric_collector._apis
-
-        query_specs = MagicMock()
-        for i in range(num_queries):
-            metric_collector.query_metrics(query_specs)
-
-        assert connect.SmartConnect.call_count == num_threads
-        assert len(metric_collector._apis) == num_threads"""
-
-
 def test_vsphere_realtime(realtime_instance, aggregator):
     realtime_instance['tags'] = ['flo:test']
     realtime_instance['resource_filters'] = [
@@ -101,26 +85,19 @@ def test_vsphere_realtime(realtime_instance, aggregator):
         {'resource': 'host', 'property': 'inventory_path', 'patterns': [r'NO_HOST_LIKE_ME']},
     ]
     realtime_instance['thread_count'] = 24
-    import time
-
-    t = time.time()
     check = VSphereCheck('vsphere', {}, [realtime_instance])
     check.check(realtime_instance)
-    print(time.time() - t)
 
 
 def test_vsphere_historical(historical_instance, aggregator):
     historical_instance['tags'] = ['flo:test']
+
+    historical_instance['thread_count'] = 8
     historical_instance['resource_filters'] = [
         {'resource': 'vm', 'property': 'name', 'patterns': [r'^VM.*', r'^\$VM5']},
         {'resource': 'host', 'property': 'inventory_path', 'patterns': [r'NO_HOST_LIKE_ME']},
     ]
-    historical_instance['thread_count'] = 8
-    historical_instance['metric_filters'] = {
-        'datastore': [r'^disk.used.latest$', r'^disk.capacity.latest$'],
-        'cluster': [r'NONE'],
-        'datacenter': [r'NONE'],
-    }
 
     check = VSphereCheck('vsphere', {}, [historical_instance])
+    import pdb; pdb.set_trace()
     check.check(historical_instance)

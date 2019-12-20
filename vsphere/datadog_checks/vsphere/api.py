@@ -3,7 +3,6 @@
 # Licensed under Simplified BSD License (see LICENSE)
 import functools
 import ssl
-import threading
 
 from pyVim import connect
 from pyVmomi import vim, vmodl  # pylint: disable=E0611

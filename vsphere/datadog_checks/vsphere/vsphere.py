@@ -16,7 +16,7 @@ from datadog_checks.vsphere.cache import InfrastructureCache, MetricsMetadataCac
 from datadog_checks.vsphere.constants import (
     ALL_RESOURCES_WITH_METRICS,
     ALLOWED_FILTER_PROPERTIES,
-    DEFAULT_BATCH_MORLIST_SIZE,
+    DEFAULT_METRICS_PER_QUERY,
     DEFAULT_MAX_QUERY_METRICS,
     DEFAULT_THREAD_COUNT,
     EXTRA_FILTER_PROPERTIES_FOR_VMS,
@@ -51,10 +51,7 @@ class VSphereCheck(AgentCheck):
 
     def __init__(self, name, init_config, instances):
         AgentCheck.__init__(self, name, init_config, instances)
-        self.infrastructure_cache = InfrastructureCache(interval_sec=180)
-        self.metrics_metadata_cache = MetricsMetadataCache(interval_sec=600)
-        self.api = None
-
+        # Configuration fields
         self.base_tags = self.instance.get("tags", [])
         self.collection_level = self.instance.get("collection_level", 1)
         self.collection_type = self.instance.get("collection_type", "realtime")
@@ -62,21 +59,25 @@ class VSphereCheck(AgentCheck):
         self.metric_filters = self.instance.get("metric_filters", {})
         self.use_guest_hostname = self.instance.get("use_guest_hostname", False)
         self.event_config = self.instance.get("event_config")
-
         self.thread_count = self.instance.get("thread_count", DEFAULT_THREAD_COUNT)
-        self.batch_morlist_size = self.instance.get("batch_morlist_size", DEFAULT_BATCH_MORLIST_SIZE)
-        self.max_historical_metrics = DEFAULT_MAX_QUERY_METRICS
+        self.metrics_per_query = self.instance.get("metrics_per_query", DEFAULT_METRICS_PER_QUERY)
+        self.max_historical_metrics = DEFAULT_MAX_QUERY_METRICS  # Updated every check run
+
+        # Additional instance variables
         self.collected_resource_types = (
             REALTIME_RESOURCES if self.collection_type == 'realtime' else HISTORICAL_RESOURCES
         )
-
         self.latest_event_query = datetime.now()
+        self.infrastructure_cache = InfrastructureCache(interval_sec=180)
+        self.metrics_metadata_cache = MetricsMetadataCache(interval_sec=600)
         self.validate_and_format_config()
+        self.api = None
 
     def validate_and_format_config(self):
         """Validate that the config is correct and transform resource filters into a more manageable object."""
 
-        if 'ssl_verify' in self.instance and 'ssl_capath' in self.instance:
+        ssl_verify = self.instance.get('ssl_verify', True)
+        if not ssl_verify and 'ssl_capath' in self.instance:
             self.warning(
                 "Your configuration is incorrectly attempting to "
                 "specify both a CA path, and to disable SSL "
@@ -351,10 +352,10 @@ class VSphereCheck(AgentCheck):
             max_batch_size = 1
         elif resource_type in REALTIME_RESOURCES or self.max_historical_metrics < 0:
             # No limitation regarding `max_query_metrics` on vCenter side.
-            max_batch_size = self.batch_morlist_size
+            max_batch_size = self.metrics_per_query
         else:
             # Collection is limited by the value of `max_query_metrics` (aliased to self.max_historical_metrics)
-            max_batch_size = min(self.batch_morlist_size, self.max_historical_metrics)
+            max_batch_size = min(self.metrics_per_query, self.max_historical_metrics)
 
         for m in mors:
             for metric in metric_ids:
@@ -407,7 +408,6 @@ class VSphereCheck(AgentCheck):
             self.api = VSphereAPI(self.instance)
 
         self.max_historical_metrics = self.instance.get("max_query_metrics", self.api.get_max_query_metrics())
-        self.max_historical_metrics = 20
 
         if self.metrics_metadata_cache.is_expired():
             with self.metrics_metadata_cache.update():

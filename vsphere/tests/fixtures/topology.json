@@ -1,0 +1,367 @@
+[
+    {
+        "spec": "Datacenter",
+        "name": "Dätacenter",
+        "parent": "Datacenters"
+    },
+    {
+        "spec": "Datacenter",
+        "name": "Datacenter2",
+        "parent": "Datacenters"
+    },
+    {
+        "spec": "Folder",
+        "name": "test",
+        "parent": "Datacenters"
+    },
+    {
+        "spec": "Folder",
+        "name": "vm",
+        "parent": "Datacenter2"
+    },
+    {
+        "spec": "Folder",
+        "name": "host",
+        "parent": "Datacenter2"
+    },
+    {
+        "spec": "Folder",
+        "name": "datastore",
+        "parent": "Datacenter2"
+    },
+    {
+        "spec": "Folder",
+        "name": "network",
+        "parent": "Datacenter2"
+    },
+    {
+        "spec": "Datastore",
+        "name": "NFS Share",
+        "parent": "datastore"
+    },
+    {
+        "spec": "Datastore",
+        "name": "Datastore 3",
+        "parent": "datastore"
+    },
+    {
+        "spec": "Datastore",
+        "name": "Datastore 4",
+        "parent": "datastore"
+    },
+    {
+        "spec": "ClusterComputeResource",
+        "name": "Cluster2",
+        "parent": "host"
+    },
+    {
+        "spec": "ClusterComputeResource",
+        "name": "datastore-cluster",
+        "parent": "host"
+    },
+    {
+        "spec": "Folder",
+        "name": "test",
+        "parent": "host"
+    },
+    {
+        "spec": "HostSystem",
+        "name": "10.0.0.103",
+        "parent": "Cluster2"
+    },
+    {
+        "spec": "HostSystem",
+        "name": "10.0.0.104",
+        "parent": "Cluster2"
+    },
+    {
+        "spec": "Folder",
+        "name": "Discovered virtual machine",
+        "parent": "vm"
+    },
+    {
+        "spec": "Folder",
+        "name": "vm",
+        "parent": "Dätacenter"
+    },
+    {
+        "spec": "Folder",
+        "name": "host",
+        "parent": "Dätacenter"
+    },
+    {
+        "spec": "Folder",
+        "name": "datastore",
+        "parent": "Dätacenter"
+    },
+    {
+        "spec": "Folder",
+        "name": "network",
+        "parent": "Dätacenter"
+    },
+    {
+        "spec": "Datastore",
+        "name": "NFS Share",
+        "parent": "datastore"
+    },
+    {
+        "spec": "Datastore",
+        "name": "Datastore 1",
+        "parent": "Datastores"
+    },
+    {
+        "spec": "Datastore",
+        "name": "Datastore 2",
+        "parent": "Datastores"
+    },
+    {
+        "spec": "ClusterComputeResource",
+        "name": "Cluster2",
+        "parent": "host"
+    },
+    {
+        "spec": "HostSystem",
+        "name": "10.0.0.101",
+        "parent": "Cluster2"
+    },
+    {
+        "spec": "HostSystem",
+        "name": "10.0.0.102",
+        "parent": "Cluster2"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-2",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-20",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-4",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-14",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-9",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-15",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-5",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-3",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-12",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-11",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-6",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-13",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-1",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-19",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-18",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-7",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-17",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-10",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-16",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM4-8",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.104",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "$VM5",
+        "parent": "vm",
+        "runtime.host": "10.0.0.103",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM3-1",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.103",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "$VM3-2",
+        "parent": "Discovered virtual machine",
+        "runtime.host": "10.0.0.103",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM1-4",
+        "parent": "vm",
+        "runtime.host": "10.0.0.102",
+        "runtime.powerState": "poweredOff"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM1-6ê",
+        "parent": "vm",
+        "runtime.host": "10.0.0.102",
+        "runtime.powerState": "suspended"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM2-1",
+        "parent": "vm",
+        "runtime.host": "10.0.0.102",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM1-3",
+        "parent": "vm",
+        "runtime.host": "10.0.0.102",
+        "runtime.powerState": "poweredOff"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM2-2",
+        "parent": "vm",
+        "runtime.host": "10.0.0.102",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM1-5",
+        "parent": "vm",
+        "runtime.host": "10.0.0.102",
+        "runtime.powerState": "poweredOff"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM1-2",
+        "parent": "vm",
+        "runtime.host": "10.0.0.101",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM-0",
+        "parent": "vm",
+        "runtime.host": "10.0.0.101",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "migrationTest",
+        "parent": "vm",
+        "runtime.host": "10.0.0.101",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "VirtualMachine",
+        "name": "VM1-1ä",
+        "parent": "vm",
+        "runtime.host": "10.0.0.101",
+        "runtime.powerState": "poweredOn"
+    },
+    {
+        "spec": "Folder",
+        "name": "Datacenters"
+    }
+]

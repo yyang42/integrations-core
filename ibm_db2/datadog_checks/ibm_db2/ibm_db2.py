@@ -88,7 +88,7 @@ class IbmDb2Check(AgentCheck):
 
             self.log.debug('Found ibm_db2 version: {}'.format(version))
         else:
-            self.log.warning('Could not retrieve ibm_db2 version info: {}'.format(row))
+            self.log.warning('Could not retrieve ibm_db2 version info: {}'.format(version))
 
     def query_instance(self):
         # Only 1 instance
